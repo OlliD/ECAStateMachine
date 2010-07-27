@@ -23,6 +23,7 @@ void SMEngine::startEngine(){
     SMEngine::widgetData = new QList< QMap<QString, QString> >;
     Logger::getInstance().log("SMEngine initialized", loglevel);
     parseXMLFile("fileName");   //TODO: change signature
+    QVBoxLayout *layout = new QVBoxLayout();
     connectSlots();
 }
 
@@ -31,16 +32,34 @@ void SMEngine::connectSlots(){
     //QObject::connect(this, SIGNAL(showMe()), SMEngine::widgetMap.value("infoWidget"), SLOT(showMe()));
     QObject::connect(this, SIGNAL(setLabel(QString)), SMEngine::widgetMap.value("infoWidget"), SLOT(setLabelText(QString)));
     QObject::connect(this, SIGNAL(setWidget(QWidget*)), smGui, SLOT(setCurrentWidget(QWidget*)));
+    QObject::connect(this, SIGNAL(setLayout(QLayout*)), smGui, SLOT(setCurrentLayout(QLayout*)));
     Logger::getInstance().log("SLOTS connected", loglevel);
 }
 
+void SMEngine::addLayout(){
+    Logger::getInstance().log("adding widget to gui: " , loglevel);
+    emit setLayout(layout);
+}
 
-void SMEngine::changeWidget(const QString name , const QString dataTag){
+void SMEngine::addWidgetToLayout(const QString, const QString){
+
+}
+
+void SMEngine::removeWidgetFromLayout(const QString name){
+    QWidget *myWidget= layout->findChild<QWidget*>(name);
+    layout->removeWidget(myWidget);
+    layout->update();
+    }
+}
+
+void SMEngine::changeWidget(const QString name, const QString dataTag){
     Logger::getInstance().log("changing widget to: " + name, loglevel);
 
     if (name == "inputWidget" && dataTag != ""){
         Logger::getInstance().log("SMENGINE: changing widget to: " + name + " with dataTag: " + dataTag, loglevel);
         QWidget *widget = widgetMap.value(name);
+        widget->setObjectName(name);
+        widget->setObjectName();
         QObject::connect(widget, SIGNAL(buttonClicked()), this, SLOT(acceptButton()));
         QObject::connect(widget, SIGNAL(submitData(QString QString)), this, SLOT(saveToDom(QString,QString)));
         QObject::connect(this, SIGNAL(createGuiWithList(QList<QMap<QString,QString> >*)), widget, SLOT(createGuiWithList(QList< QMap<QString, QString> >*)));
@@ -133,7 +152,6 @@ void SMEngine::showInputWidget(){
 }
 
 
-
 float SMEngine::getRandom(){
 
 }
@@ -158,18 +176,7 @@ void SMEngine::timeOut(){
     emit breakIsOver();
 }
 
-void SMEngine::save(){
-    QString fileName =
-            QFileDialog::getSaveFileName(smGui, tr("XML-Datei speicher"), QDir::currentPath(), tr("XML Datei (*.xml)"));// (this, tr("XML-Datei speichern"), QDir::currentPath(), tr("XML Datei (*.xml)"));
-    if(fileName.isEmpty())
-        return;
-    QFile file(fileName);
-    if(!file.open(QFile::WriteOnly | QFile::Text)){
-        QMessageBox::warning(smGui, tr("Fehler beim lesen"),
-                             tr("Kann die Daten %1 nicht lesen: \n%2").arg(fileName).arg(file.errorString()));
-        return;
-    }
-}
+
 
 void SMEngine::finished(){
     Logger::getInstance().log("it's all been done", loglevel);
@@ -180,3 +187,19 @@ void SMEngine::repaintGui(){
     smGui->update();
 }
 
+void SMEngine::toggleFirstUse(bool b){
+    SMEngine::firstUse = b;
+}
+
+/*void SMEngine::save(){
+    QString fileName =
+            QFileDialog::getSaveFileName(smGui, tr("XML-Datei speicher"), QDir::currentPath(), tr("XML Datei (*.xml)"));// (this, tr("XML-Datei speichern"), QDir::currentPath(), tr("XML Datei (*.xml)"));
+    if(fileName.isEmpty())
+        return;
+    QFile file(fileName);
+    if(!file.open(QFile::WriteOnly | QFile::Text)){
+        QMessageBox::warning(smGui, tr("Fehler beim lesen"),
+                             tr("Kann die Daten %1 nicht lesen: \n%2").arg(fileName).arg(file.errorString()));
+        return;
+    }
+}*/

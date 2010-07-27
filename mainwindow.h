@@ -26,6 +26,7 @@
 #include <QString>
 #include <QTimer>
 #include <QDomDocument>
+#include <QCheckBox>
 
 #include "smengine.h"
 #include "logger.h"
@@ -66,9 +67,10 @@ private:
     DOMParser *domParser;
     QWidget *myWidget;
     QLabel* label, *infoLabel;
-    QPushButton *loadSm, *loadDataFile;
+    QPushButton *loadSm, *loadDataFile, *loadExistingProfile;
     QPushButton *createSm, *quit, *submit;
     QLineEdit *line;
+    QCheckBox *firstUseBox;
     QVBoxLayout *vlayout;
     QHBoxLayout *hlayout;
     QVBoxLayout *tableWidgetLayout;
@@ -95,6 +97,8 @@ private:
     void createAction();
     void loadFile(const QString &fileName);
 
+signals:
+    void firstUse(bool);
 
 };
 

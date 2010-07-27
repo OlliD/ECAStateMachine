@@ -10,11 +10,12 @@
 #include <QTimer>
 #include <QSet>
 #include <QDomDocument>
+#include <QVBoxLayout>
 
 #include "infowidget.h"
 #include "inputwidget.h"
 #include "dialogwidget.h"
-#include "initialwidget.h"
+#include "controlwidget.h"
 #include "smgui.h"
 #include "logger.h"
 #include "widgetinterface.h"
@@ -32,7 +33,7 @@ public:
     SMEngine *smEngine;
     InfoWidget *infoWidget;
     InputWidget *inputWidget;
-    InitialWidget *initialWidget;
+    ControlWidget *controlWidget;
 
 public slots:
     void repaintGui();
@@ -40,7 +41,11 @@ public slots:
     void parseXMLFile(QString);
     void showInfoWidget(QString label, QString widget);
     void showInputWidget();
+    void addLayout();
+    void addWidgetToLayout(const QString, const QString = "");
+    void removeWidgetFromLayout(const QString name);
 
+    void toggleFirstUse(bool);
     void finished();
 //    void saveStartTime();
 //    void loadProfile();
@@ -62,12 +67,12 @@ private:
     //void showInitialWidget();
     float getRandom();
     void executeOnCondition();
-    void save();
+    //void save();
     void open();
     void connectSlots();
     void addPause(int);
     QString getElementByTag(QList< QMap<QString, QString> >* list, QString str);
-
+    bool firstUse;
     SMGui *smGui;
     const static int loglevel = 1;
     QLayout *layout;
@@ -85,6 +90,7 @@ signals:
     void showMe();
     void setLabel(QString);
     void setWidget(QWidget *w);
+    void setLayout(QLayout *l);
     void breakIsOver();
     void yesClicked();
     void noClicked();

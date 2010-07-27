@@ -45,14 +45,19 @@ void MainWindow::initGui(){
     submit = new QPushButton("change manually");
     testLayout->addWidget(line);
     testLayout->addWidget(submit);
+    MainWindow::firstUseBox = new QCheckBox("Nehmen Sie erste mal teil?");
+    MainWindow::loadExistingProfile = new QPushButton("Profil laden");
     MainWindow::createSm = new QPushButton("execute state machine");
     MainWindow::loadSm = new QPushButton("load state machine");
     MainWindow::loadDataFile = new QPushButton("load Datafile");
     vlayout->addWidget(loadSm);
+    vlayout->addWidget(firstUseBox);
+    firstUseBox->setEnabled(false);
     vlayout->addWidget(loadDataFile);
     vlayout->addWidget(createSm);
     vlayout->addSpacing(30);
-    vlayout->addLayout(testLayout);
+    //TODO:for testing onlay
+    //vlayout->addLayout(testLayout);
     vlayout->addSpacing(30);
     vlayout->addWidget(quit);
     createSm->setEnabled(false);
@@ -83,6 +88,7 @@ void MainWindow::connectSlots(){
     //QObject::connect(MainWindow::createSm, SIGNAL(clicked()), this, SLOT(startScript()));
     QObject::connect(loadDataFile, SIGNAL(clicked()), this, SLOT(openDataFile()));
     QObject::connect(loadSm, SIGNAL(clicked()),this, SLOT(open()) );
+    QObject::connect(firstUseBox, SIGNAL(clicked()), this, SLOT(openDataFile()));
     QObject::connect(createSm, SIGNAL(clicked()), this, SLOT(startScript()));
 }
 
@@ -97,11 +103,19 @@ void MainWindow::open()
         stateMachine = QtScriptedStateMachine::load(fileName);
         loadSm->setEnabled(false);
         loadDataFile->setEnabled(true);
+        firstUseBox->setEnabled(true);
+
 
     }
 }
 
 void MainWindow::openDataFile(){
+if (firstUseBox->isChecked())
+    loadDataFile->setEnabled(false);
+else
+    firstUseBox->setEnabled(false);
+
+
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
                                                      "/Users/odamm/StateMachine/xml",
                                                      tr("XML-Files (*.xml)"));
@@ -129,8 +143,11 @@ void MainWindow::startScript(){
     QTimer timer;
     timer.start(2000);
     this->hide();
+    QObject::connect(this, SIGNAL(firstUse(bool)), smEngine, SLOT(toggleFirstUse(bool)));
     QObject::connect(stateMachine, SIGNAL(finished()), smEngine, SLOT(finished()));
     stateMachine->start();
+    if (firstUseBox->isChecked())
+        emit firstUse(true);
     smEngine->startEngine();
     Logger::getInstance().log("StateMachine started", loglevel);
 

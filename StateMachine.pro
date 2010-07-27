@@ -25,7 +25,8 @@ SOURCES += main.cpp\
     datawidget.cpp \
     widgetinterface.cpp \
     domparser.cpp \
-    guiwidget.cpp
+    guiwidget.cpp \
+    controlwidget.cpp
 
 HEADERS  += mainwindow.h\
             logger.h \
@@ -40,7 +41,8 @@ HEADERS  += mainwindow.h\
     datawidget.h \
     widgetinterface.h \
     domparser.h \
-    guiwidget.h
+    guiwidget.h \
+    controlwidget.h
 
 include(/Users/odamm/StateMachine/qtstatemachine/src/qtstatemachine.pri)
 

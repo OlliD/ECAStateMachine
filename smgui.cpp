@@ -29,6 +29,15 @@ void SMGui::setCurrentWidget(QWidget *w){
     SMGui::setCentralWidget(w);
     this->repaint();
 }
+
+void SMGui::setCurrentLayout(QLayout *l){
+    Logger::getInstance().log("adding new Layout", 1);
+    //widgetlayout->addWidget(w);
+    SMGui::setLayout(l);
+    this->repaint();
+}
+
+
 void SMGui::setMenu(QMenuBar *m){
     this->setMenuBar(m);
 }

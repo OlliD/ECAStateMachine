@@ -6,6 +6,7 @@
 #include <QVBoxLayout>
 #include <QWidget>
 #include <QStackedWidget>
+#include <QLayout>
 
 #include "inputwidget.h"
 #include "infowidget.h"
@@ -36,6 +37,7 @@ signals:
 
 public slots:
     void setCurrentWidget(QWidget *w);
+    void setCurrentLayout(QLayout *l);
     void setMenu(QMenuBar *m);
 };
 
