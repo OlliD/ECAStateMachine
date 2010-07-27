@@ -1,0 +1,7 @@
+<Trialdata>
+ <Person>
+  <Vorname type="string"/>
+  <Name type="string"/>
+  <Geburtstag type="date"/>
+ </Person>
+</Trialdata>

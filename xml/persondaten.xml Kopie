@@ -1,0 +1,12 @@
+<Trialdata>
+	<Person>
+		<Vorname type = "string"></Vorname>
+		<Name type = "string"></Name>
+		<Geburtstag type = "date"></Geburtstag>
+	</Person>
+	<Widgets>
+		<Info_1 type = "string">Dies ist ein InfoText</Info_1>
+		<Info_2 type = "string">Dies ist ein InfoText</Info_2>
+		<Info_3 type = "string">Dies ist ein InfoText</Info_3>
+	</Widgets>
+</Trialdata>

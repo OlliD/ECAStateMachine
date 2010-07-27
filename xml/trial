@@ -1,0 +1,25 @@
+<scxml xmlns="http://www.w3.org/2005/07/scxml" initial="root">
+    <parallel id="root">
+        <state initial="gui">
+            <state id="gui" initial="gui">
+            <onentry>
+            	<script>smengine.changeWidget("infoWidget", "Person"); </script>
+            </onentry>
+                <transition event="q-signal:backButton.clicked()" anchor="lastmenupos" />
+         	</state>
+   	        <state id="show_albums">
+                <transition event="q-signal:model.albumChanged(QString)">
+					<script>model.loadAlbums();</script>
+                </transition>
+                  <transition event="q-signal:selectButton.clicked()"    cond="view.currentIndex &gt;=0" target="songs">
+                      <script>
+                      model.filterSongsByAlbum(view.currentItem);</script>
+                  </transition>
+                  <onentry>
+                      <script>view.showAlbums ();</script>
+                  </onentry>
+              </state>
+
+        </state>
+    </parallel>
+</scxml>

@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>ui/dialog01.ui</file>
+        <file>ui/calculatorform.ui</file>
+        <file>ui/dialog02.ui</file>
+    </qresource>
+</RCC>

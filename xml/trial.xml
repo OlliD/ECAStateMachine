@@ -1,0 +1,21 @@
+<scxml xmlns="http://www.w3.org/2005/07/scxml" initial="gui">
+  
+           <state id="gui">
+           <transition event="q-signal:smEngine.yesClicked()" target="changeGui">
+           </transition>
+         	<onentry>
+         		<script>smEngine.changeWidget("infoWidget", "info_1") </script>
+            </onentry>
+           </state>
+           
+           <state id="changeGui">
+           <transition event="q-signal:smEngine.yesClicked()" target="gui">
+
+           </transition>
+         	<onentry>
+                      	<script>smEngine.changeWidget("inputWidget", "Person") </script>
+
+            </onentry>
+           </state>
+
+</scxml>

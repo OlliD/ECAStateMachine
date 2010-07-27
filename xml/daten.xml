@@ -1,0 +1,20 @@
+<Trialdata>
+	<data>
+		<Person>
+			<vorname type = "string">klaus</vorname>
+			<name type = "string">nn</name>
+			<geburtstag type = "date">nn</geburtstag>
+		</Person>
+	</data>
+	<data>
+		<Widgets>
+			<info_1 type = "string">Dies ist ein InfoText</info_1>
+			<info_2 type = "string">Dies ist ein weiterer Text</info_2>
+		</Widgets>
+	</data>
+	<data>
+		<UserInput>
+			<input id="input1">eigebener Text</input>
+		</UserInput>
+	</data>
+</Trialdata>
